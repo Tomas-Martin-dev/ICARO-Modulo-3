@@ -1,0 +1,10 @@
+GET https://api.edamam.com/api/recipes/v2?q=tofu&app_id=7f8249b3&app_key=47c82c85fcfeb14baa219079d980de6f&health=vegan&field=label&field=calories&field=ingredientLines&field=url
+//app-id:7f8249b3
+//app-key:47c82c85fcfeb14baa219079d980de6f
+
+
+
+
+
+
+
