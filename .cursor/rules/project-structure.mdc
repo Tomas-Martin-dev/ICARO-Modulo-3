@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Estructura del Proyecto - App de Recetas
+
+## Organización de Directorios
+
+### Estructura Principal
+- [src/main.jsx](mdc:src/main.jsx) - Punto de entrada de la aplicación
+- [src/App.jsx](mdc:src/App.jsx) - Componente principal con configuración de rutas
+- [src/index.css](mdc:src/index.css) - Estilos globales
+
+### Directorios de Código
+- `src/components/` - Componentes reutilizables (Cards, Modales, Selectors)
+- `src/pages/` - Páginas principales (Index/Home, Favorites)
+- `src/layout/` - Componentes de layout (Header, Footer, Navigation)
+- `src/hooks/` - Custom hooks 
+- `src/store/` - Configuración de Zustand para estado global
+- `src/services/` - Configuración de APIs (Axios, TheMealDB, DeepL)
+- `src/libs/` - Librerías y utilidades (i18next, localStorage helpers)
+
+## Páginas Principales
+
+### Index/Home (`src/pages/Index.jsx`)
+- Hero section
+- Selector de categorías de recetas
+- Grid de cards de recetas
+- Modal con detalles y acciones de favoritos
+
+### Favorites (`src/pages/Favorites.jsx`)
+- Lista de recetas favoritas
+- Persistencia en localStorage y context
+- Búsqueda por IDs almacenados
+

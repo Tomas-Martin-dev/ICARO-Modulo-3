@@ -1,31 +1,39 @@
-import api from '../libs/axios';
+import axios from 'axios';
 
-const getRecipes = async text => {
+const getCategories = async () => {
   try {
-    const response = await api.get('/search_api', {
-      params: { text },
-    });
-    console.log('✅ Recetas obtenidas:', response.data);
+    const response = await axios.get(
+      'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
+    );
     return response.data;
   } catch (error) {
-    console.error('❌ Error al obtener recetas:', error.message);
-
-    if (error.response?.status === 403) {
-      console.error('🔒 Error 403: API key inválida o sin permisos');
-      throw new Error(
-        'No tienes autorización para acceder a esta API. Verifica tu API key.'
-      );
-    }
-
-    if (error.response?.status === 429) {
-      console.error('⏰ Error 429: Demasiadas peticiones');
-      throw new Error(
-        'Has excedido el límite de peticiones. Espera un momento antes de intentar de nuevo.'
-      );
-    }
-
+    console.error('Error fetching categories:', error);
     throw error;
   }
 };
 
-export { getRecipes };
+const getRecipesByCategory = async category => {
+  try {
+    const response = await axios.get(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching recipes byCategory:', error);
+    throw error;
+  }
+};
+
+const getRecipeById = async id => {
+  try {
+    const response = await axios.get(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching recipe byID:', error);
+    throw error;
+  }
+};
+
+export { getCategories, getRecipesByCategory, getRecipeById };

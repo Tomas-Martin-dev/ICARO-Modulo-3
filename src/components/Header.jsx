@@ -16,11 +16,15 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ChefHat, Star, Menu as MenuIcon, X } from 'lucide-react';
+import LanguageSelector from './LanguageSelector';
+import { useTranslation } from '../hooks/useTranslation';
+import DrawerContent from './DrawerContent';
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { t } = useTranslation();
 
   const toggleDrawer = open => event => {
     if (
@@ -37,29 +41,6 @@ export default function Header() {
     { text: 'Favoritos', icon: <Star size={20} />, path: '/favorites' },
   ];
 
-  const drawerContent = (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-        <IconButton onClick={toggleDrawer(false)}>
-          <X />
-        </IconButton>
-      </Box>
-      <List>
-        {navLinks.map(link => (
-          <ListItem button component={Link} to={link.path} key={link.text}>
-            <ListItemIcon>{link.icon}</ListItemIcon>
-            <ListItemText primary={link.text} />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
     <AppBar position="static" className="!bg-emerald-500 shadow-lg">
       <Toolbar>
@@ -71,7 +52,7 @@ export default function Header() {
             component="div"
             className="text-white font-bold"
           >
-            Recetas App
+            Chefcito App
           </Typography>
         </Box>
 
@@ -90,7 +71,7 @@ export default function Header() {
               open={drawerOpen}
               onClose={toggleDrawer(false)}
             >
-              {drawerContent}
+              <DrawerContent toggleDrawer={toggleDrawer} />
             </Drawer>
           </>
         ) : (
@@ -107,6 +88,9 @@ export default function Header() {
                 {link.text}
               </Button>
             ))}
+            <Box sx={{ ml: 2 }}>
+              <LanguageSelector />
+            </Box>
           </>
         )}
       </Toolbar>

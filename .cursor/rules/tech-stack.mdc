@@ -1,0 +1,54 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Stack Tecnológico - App de Recetas
+
+## Estilos y UI
+
+### Tailwind CSS
+- Usar clases utilitarias para estilos responsive
+- Implementar design system consistente con spacing, colores y tipografía
+- Preferir componentes reutilizables con clases Tailwind
+
+### Material UI (MUI)
+- Usar para componentes complejos (Selects, Modales, Botones)
+- Combinar con Tailwind para personalización adicional
+- Mantener consistencia con theme de Material Design
+
+## Estado y Hooks
+
+### React Hooks Estándar
+- `useState` para estado local de componentes
+- `useEffect` para side effects y API calls
+- `useMemo` y `useCallback` para optimización
+
+### Zustand (Estado Global)
+- Store principal para: categorías, recetas, favoritos
+- Persistir favoritos en localStorage automáticamente
+- Acciones separadas para cada funcionalidad
+
+### Custom Hooks
+- Crear al menos 1 custom hook
+
+## APIs y Servicios
+
+### Axios
+- Configuración base en `src/services/api.js`
+- Interceptors para manejo de errores
+- Instancias separadas para TheMealDB y DeepL
+
+### React Router
+- Rutas: `/` (Home), `/favorites`
+- Navigation programática con `useNavigate`
+- Protected routes si es necesario
+
+## Internacionalización
+
+### i18next + DeepL
+- Configuración en `src/libs/i18n.js`
+- Traducir todas las recetas obtenidas de la API
+- Soporte para idiomas Español y Ingles
+
+

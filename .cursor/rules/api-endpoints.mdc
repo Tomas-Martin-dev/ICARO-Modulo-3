@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# API Endpoints y Servicios - TheMealDB
+
+## Endpoints de TheMealDB
+
+### Obtener Categorías
+```
+GET www.themealdb.com/api/json/v1/1/list.php?c=list
+```
+- Retorna lista de todas las categorías disponibles
+- Usar para poblar el selector de categorías
+
+### Buscar Receta por ID
+```
+GET www.themealdb.com/api/json/v1/1/lookup.php?i={recipeId}
+```
+- Ejemplo: `lookup.php?i=52772`
+- Usar para obtener detalles completos de recetas favoritas
+- Necesario para página de favoritos
+
+### Buscar Recetas por Categoría
+```
+GET https://www.themealdb.com/api/json/v1/1/filter.php?c={category}
+```
+- Ejemplo: `filter.php?c=Beef`
+- Usar cuando se selecciona una categoría
+- Retorna lista de recetas para mostrar en cards
+
+## Configuración de Servicios
+
+### Estructura en `src/services/`
+- `themealdb.js` - Cliente Axios para TheMealDB
+- `deepl.js` - Cliente para traducción
+- `api.js` - Configuración base de Axios
+
+### Manejo de Traducción
+- Cada respuesta de TheMealDB debe pasarse por DeepL
+- Traducir: nombres, instrucciones, ingredientes
+- Cachear traducciones para evitar llamadas redundantes
+
+## Patrones de Data Fetching
+
+### En Componentes
+- Loading states con skeletons
+- Error boundaries para manejo de errores
+
+### En Store (Zustand)
+- Acciones async para fetch de datos
+- Estado de loading/error en el store global
+- Normalizar datos antes de almacenar
+
