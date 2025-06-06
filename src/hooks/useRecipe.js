@@ -1,3 +1,6 @@
+import { useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
+
 function useRecipe() {
   function formatIngredient(recipe) {
     const ingredients = [];
@@ -12,8 +15,14 @@ function useRecipe() {
     return ingredients;
   }
 
+  const location = useLocation();
+  const isFavoritesPage = useMemo(() => {
+    return location.pathname === '/favorites';
+  }, [location.pathname]);
+
   return {
     formatIngredient,
+    isFavoritesPage,
   };
 }
 

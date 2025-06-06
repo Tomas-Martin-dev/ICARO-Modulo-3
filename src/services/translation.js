@@ -14,6 +14,7 @@ const saveToCache = (text, translation) => {
     timestamp: Date.now(),
     expiry: Date.now() + 24 * 60 * 60 * 1000,
   });
+  console.log('💾 Guardado en cache:', text.substring(0, 30) + '...');
 };
 
 const getFromCache = text => {
@@ -21,11 +22,15 @@ const getFromCache = text => {
   const cached = translationCache.get(key);
 
   if (cached && cached.expiry > Date.now()) {
+    console.log(' Cache HIT para:', text.substring(0, 30) + '...');
     return cached.translation;
   }
 
   if (cached) {
+    console.log('Cache EXPIRADO para:', text.substring(0, 30) + '...');
     translationCache.delete(key);
+  } else {
+    console.log('Cache MISS para:', text.substring(0, 30) + '...');
   }
 
   return null;
@@ -74,28 +79,77 @@ const splitText = (text, maxLength = 400) => {
 // Texto
 export const translateText = async text => {
   try {
-    const cachedTranslation = getFromCache(text);
-    if (cachedTranslation) {
-      console.log('Traducción en caché');
-      return cachedTranslation;
-    }
-
     if (!text || text.trim().length === 0) {
       return text;
     }
 
-    if (text.length > 400) {
-      const chunks = splitText(text);
-      const translatedChunks = await Promise.all(
-        chunks.map(chunk => translateText(chunk))
+    const cachedTranslation = getFromCache(text);
+    if (cachedTranslation) {
+      console.log(
+        'Traducción completa en caché para:',
+        text.substring(0, 50) + '...'
       );
-      const fullTranslation = translatedChunks.join(' ');
-      saveToCache(text, fullTranslation);
-      return fullTranslation;
+      return cachedTranslation;
     }
 
+    if (text.length <= 400) {
+      console.log(
+        'Llamando API para texto corto:',
+        text.substring(0, 30) + '...'
+      );
+      const params = new URLSearchParams({
+        q: text,
+        langpair: 'en|es',
+      });
+
+      const url = `${MYMEMORY_BASE_URL}?${params}`;
+
+      const response = await axios.get(url, {
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      const data = response.data;
+
+      if (data.responseStatus !== 200) {
+        console.warn('api error:', data.responseDetails);
+        return text;
+      }
+
+      const translation = data.responseData.translatedText;
+      saveToCache(text, translation);
+      return translation;
+    }
+
+    const chunks = splitText(text);
+    console.log(
+      `Traduciendo texto largo dividido en ${chunks.length} fragmentos`
+    );
+
+    const translatedChunks = await Promise.all(
+      chunks.map(chunk => translateChunkDirectly(chunk))
+    );
+
+    const fullTranslation = translatedChunks.join(' ');
+    saveToCache(text, fullTranslation);
+    return fullTranslation;
+  } catch (error) {
+    console.error('Error en traducción', error);
+    return text;
+  }
+};
+
+const translateChunkDirectly = async chunk => {
+  try {
+    const cachedChunk = getFromCache(chunk);
+    if (cachedChunk) {
+      return cachedChunk;
+    }
+
+    console.log('Llamando API para fragmento:', chunk.substring(0, 30) + '...');
     const params = new URLSearchParams({
-      q: text,
+      q: chunk,
       langpair: 'en|es',
     });
 
@@ -110,17 +164,16 @@ export const translateText = async text => {
     const data = response.data;
 
     if (data.responseStatus !== 200) {
-      console.warn('api error:', data.responseDetails);
-      return text;
+      console.warn('api error for chunk:', data.responseDetails);
+      return chunk;
     }
 
     const translation = data.responseData.translatedText;
-    saveToCache(text, translation);
-
+    saveToCache(chunk, translation);
     return translation;
   } catch (error) {
-    console.error('Error en traducción', error);
-    return text;
+    console.error('Error traduciendo fragmento:', error);
+    return chunk;
   }
 };
 

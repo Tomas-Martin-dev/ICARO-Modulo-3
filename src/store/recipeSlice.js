@@ -10,6 +10,7 @@ export const useRecipeStore = create((set, get) => ({
   recipe: {},
   categories: [],
   recipes: [],
+  favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
 
   originalCategories: [],
   originalRecipes: [],
@@ -86,5 +87,30 @@ export const useRecipeStore = create((set, get) => ({
 
   closeModal: () => {
     set({ stateModal: false, recipe: {}, originalRecipe: {} });
+  },
+
+  addToFavorites: recipe => {
+    const state = get();
+    const isAlreadyFavorite = state.favorites.some(
+      fav => fav.idMeal === recipe.idMeal
+    );
+
+    if (!isAlreadyFavorite) {
+      const newFavorites = [...state.favorites, recipe];
+      localStorage.setItem('favorites', JSON.stringify(newFavorites));
+      set({ favorites: newFavorites });
+    }
+  },
+
+  removeFromFavorites: recipeId => {
+    const state = get();
+    const newFavorites = state.favorites.filter(fav => fav.idMeal !== recipeId);
+    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    set({ favorites: newFavorites });
+  },
+
+  isRecipeFavorite: recipeId => {
+    const state = get();
+    return state.favorites.some(fav => fav.idMeal === recipeId);
   },
 }));

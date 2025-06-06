@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
+import useRecipe from './useRecipe';
 
 export function useScrollDirection() {
-  const [scrollDirection, setScrollDirection] = useState(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isAtTop, setIsAtTop] = useState(true);
+  const { isFavoritesPage } = useRecipe();
 
   useEffect(() => {
+    if (isFavoritesPage) return;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsAtTop(currentScrollY < 10);
@@ -17,7 +19,7 @@ export function useScrollDirection() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isFavoritesPage]);
 
   return { isAtTop };
 }

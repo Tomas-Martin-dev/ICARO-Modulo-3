@@ -15,6 +15,12 @@ const resources = {
         ingredients: 'Ingredientes:',
         instructions: 'Instrucciones:',
         addToFavorites: 'Agregar a Favoritos',
+        alreadyInFavorites: 'Ya está en Favoritos',
+        favorites: 'Favoritos',
+        noFavorites: 'No tienes recetas favoritas aún',
+        addSomeRecipes:
+          'Agrega algunas recetas a tus favoritos desde la página principal',
+        removeFromFavorites: 'Quitar de Favoritos',
         close: 'Cerrar',
       },
       languages: {
@@ -34,6 +40,11 @@ const resources = {
         ingredients: 'Ingredients:',
         instructions: 'Instructions:',
         addToFavorites: 'Add to Favorites',
+        alreadyInFavorites: 'Already in Favorites',
+        favorites: 'Favorites',
+        noFavorites: 'You have no favorite recipes yet',
+        addSomeRecipes: 'Add some recipes to your favorites from the main page',
+        removeFromFavorites: 'Remove from Favorites',
         close: 'Close',
       },
       languages: {

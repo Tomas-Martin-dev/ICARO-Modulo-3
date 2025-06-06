@@ -2,16 +2,27 @@ import React from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
-import { Home, Info, Contact, X } from 'lucide-react';
+import { ChefHat, Star, X } from 'lucide-react';
 import { IconButton } from '@mui/material';
+import useRecipe from '../hooks/useRecipe';
+import LanguageSelector from './LanguageSelector';
 
 export default function DrawerContent({ toggleDrawer }) {
   const { t } = useTranslation();
-
+  const { isFavoritesPage } = useRecipe();
   const navLinks = [
-    { text: t('ui.home'), icon: <Home />, path: '/' },
-    { text: t('ui.about'), icon: <Info />, path: '/about' },
-    { text: t('ui.contact'), icon: <Contact />, path: '/contact' },
+    {
+      text: 'Recetas',
+      icon: <ChefHat size={20} />,
+      path: '/',
+      className: `text-white hover:!bg-emerald-600 !px-4 transition-colors duration-300 ${!isFavoritesPage && '!text-amber-200 '}`,
+    },
+    {
+      text: 'Favoritos',
+      icon: <Star size={20} />,
+      path: '/favorites',
+      className: `text-white hover:!bg-emerald-600 !px-4 transition-colors duration-300 ${isFavoritesPage && '!text-amber-200'}`,
+    },
   ];
 
   return (
@@ -34,6 +45,10 @@ export default function DrawerContent({ toggleDrawer }) {
             <ListItemText primary={link.text} />
           </ListItem>
         ))}
+
+        <Box sx={{ ml: 2 }} className="!ml-0 md:!ml-2">
+          <LanguageSelector variant="drawer" />
+        </Box>
       </List>
     </Box>
   );

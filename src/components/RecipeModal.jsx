@@ -1,15 +1,24 @@
 import React from 'react';
 import { useRecipeStore } from '../store/recipeSlice';
-import { Modal, Box, Typography, IconButton, Button } from '@mui/material';
+import { Modal, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useRecipe from '../hooks/useRecipe';
 import { useTranslation } from '../hooks/useTranslation';
 
 export default function RecipeModal() {
-  const { recipe, closeModal, stateModal } = useRecipeStore();
+  const { recipe, closeModal, stateModal, addToFavorites, isRecipeFavorite } =
+    useRecipeStore();
   const { formatIngredient } = useRecipe();
   const { t } = useTranslation();
+
+  const isFavorite = isRecipeFavorite(recipe.idMeal);
+
+  const handleAddToFavorites = () => {
+    addToFavorites(recipe);
+  };
+
+  const { isFavoritesPage } = useRecipe();
 
   return (
     <Modal
@@ -93,12 +102,24 @@ export default function RecipeModal() {
             {recipe.strInstructions}
           </Typography>
 
-          <div className="flex justify-center mt-6">
-            <button className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200 cursor-pointer">
-              <FavoriteIcon />
-              {t('ui.addToFavorites')}
-            </button>
-          </div>
+          {!isFavoritesPage && (
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleAddToFavorites}
+                disabled={isFavorite}
+                className={`flex items-center gap-2 font-medium px-6 py-3 rounded-lg transition-colors duration-200 ${
+                  isFavorite
+                    ? 'bg-gray-400 text-gray-600 cursor-default'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer'
+                }`}
+              >
+                <FavoriteIcon />
+                {isFavorite
+                  ? t('ui.alreadyInFavorites')
+                  : t('ui.addToFavorites')}
+              </button>
+            </div>
+          )}
         </Box>
       </Box>
     </Modal>
