@@ -12,7 +12,7 @@ import RecipeCard from '../components/RecipeCard';
 import RecipeModal from '../components/RecipeModal';
 import { useTranslation } from '../hooks/useTranslation';
 import { useTranslatedContent } from '../hooks/useTranslatedContent';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '../components/ui/HeroSection';
 
 function HomePage() {
   const {

@@ -1,8 +1,9 @@
 import React from 'react';
-import { useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../../hooks/useTranslation';
 import { Languages } from 'lucide-react';
 
-export default function LanguageSelector({ variant = 'header' }) {
+export default function LanguageSelector({variant = "header"}) {
+
   const { currentLanguage, changeLanguage, getAvailableLanguages } =
     useTranslation();
 

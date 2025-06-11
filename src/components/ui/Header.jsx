@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { ChefHat, Star, Menu as MenuIcon, Info } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 import DrawerContent from './DrawerContent';
-import useRecipe from '../hooks/useRecipe';
+import useRecipe from '../../hooks/useRecipe';
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);

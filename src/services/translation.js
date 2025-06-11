@@ -14,7 +14,7 @@ const saveToCache = (text, translation) => {
     timestamp: Date.now(),
     expiry: Date.now() + 24 * 60 * 60 * 1000,
   });
-  console.log('💾 Guardado en cache:', text.substring(0, 30) + '...');
+  console.log(' Guardado en cache:', text.substring(0, 30) + '...');
 };
 
 const getFromCache = text => {

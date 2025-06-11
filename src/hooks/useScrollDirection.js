@@ -8,6 +8,7 @@ export function useScrollDirection() {
 
   useEffect(() => {
     if (isFavoritesPage) return;
+    
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsAtTop(currentScrollY < 10);

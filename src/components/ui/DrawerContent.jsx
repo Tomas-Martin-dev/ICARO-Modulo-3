@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../../hooks/useTranslation';
 import { ChefHat, Star, X } from 'lucide-react';
 import { IconButton } from '@mui/material';
-import useRecipe from '../hooks/useRecipe';
+import useRecipe from '../../hooks/useRecipe';
 import LanguageSelector from './LanguageSelector';
 
 export default function DrawerContent({ toggleDrawer }) {
