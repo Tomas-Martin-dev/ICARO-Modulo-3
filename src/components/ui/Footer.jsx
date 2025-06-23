@@ -83,7 +83,7 @@ export default function Footer() {
 
             <Tooltip title="Ver perfil de desarrollador" placement="top">
               <IconButton
-                href="https://github.com/Tomas-Martin-dev"
+                href="https://github.com/Tomiimartin"
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
